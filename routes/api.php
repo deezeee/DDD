@@ -24,3 +24,8 @@ Route::post(
     '/exams/submit',
     [ExamController::class, 'submit']
 );
+
+Route::post(
+    '/exams/submit-ddd',
+    [ExamController::class, 'submit_ddd']
+);

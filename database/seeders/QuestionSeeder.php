@@ -15,7 +15,27 @@ class QuestionSeeder extends Seeder
         DB::table('questions')->insert([
             [
                 'id' => 1,
-                'type' => 'multiple_choice',
+                'type' => 'true_false',
+                'content' => 'PHP là ngôn ngữ strongly typed.',
+
+                'option_a' => null,
+                'option_b' => null,
+                'option_c' => null,
+                'option_d' => null,
+
+                'correct_answer' => '0',
+
+                'payload' => json_encode([
+                    'correct' => false,
+                ]),
+
+                'score' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 2,
+                'type' => 'single_choice',
                 'content' => 'Laravel được viết bằng ngôn ngữ nào?',
 
                 'option_a' => 'Java',
@@ -32,35 +52,13 @@ class QuestionSeeder extends Seeder
                         'C' => 'Go',
                         'D' => 'Rust',
                     ],
-                    'correct' => 'B'
+                    'correct' => 'B',
                 ]),
 
                 'score' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
-            [
-                'id' => 2,
-                'type' => 'true_false',
-                'content' => 'PHP là ngôn ngữ strongly typed.',
-
-                'option_a' => null,
-                'option_b' => null,
-                'option_c' => null,
-                'option_d' => null,
-
-                'correct_answer' => '0',
-
-                'payload' => json_encode([
-                    'correct' => false
-                ]),
-
-                'score' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
             [
                 'id' => 3,
                 'type' => 'fill_blank',
@@ -76,35 +74,16 @@ class QuestionSeeder extends Seeder
                 'payload' => json_encode([
                     'answers' => [
                         'laravel',
-                        'Laravel'
-                    ]
+                        'Laravel',
+                    ],
                 ]),
 
                 'score' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
             [
                 'id' => 4,
-                'type' => 'essay',
-                'content' => 'Giải thích sự khác nhau giữa MVC và DDD.',
-
-                'option_a' => null,
-                'option_b' => null,
-                'option_c' => null,
-                'option_d' => null,
-
-                'correct_answer' => null,
-
-                'payload' => json_encode([]),
-
-                'score' => 5,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 5,
                 'type' => 'matching',
 
                 'content' => 'Match technologies with purpose',
@@ -121,7 +100,7 @@ class QuestionSeeder extends Seeder
                         'PHP' => 'Backend',
                         'Vue' => 'Frontend',
                         'Redis' => 'Cache',
-                    ]
+                    ],
                 ]),
 
                 'score' => 3,
@@ -129,6 +108,25 @@ class QuestionSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 5,
+                'type' => 'essay',
+                'content' => 'Giải thích sự khác nhau giữa MVC và DDD.',
+
+                'option_a' => null,
+                'option_b' => null,
+                'option_c' => null,
+                'option_d' => null,
+
+                'correct_answer' => null,
+
+                'payload' => json_encode([]),
+
+                'score' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
         ]);
     }
 }

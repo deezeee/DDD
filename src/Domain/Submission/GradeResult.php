@@ -1,0 +1,24 @@
+<?php
+
+namespace Testcenter\Domain\Submission;
+
+use Testcenter\Domain\Score;
+
+class GradeResult
+{
+    public function __construct(
+        private readonly bool $correct,
+        private readonly Score $earnedScore,
+    ) {
+    }
+
+    public function isCorrect(): bool
+    {
+        return $this->correct;
+    }
+
+    public function score(): Score
+    {
+        return $this->earnedScore;
+    }
+}
