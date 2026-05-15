@@ -163,15 +163,13 @@ class ExamController
             'answers' => ['required', 'array'],
         ]);
 
-        $result = Db::transaction(function () use ($request) {
-            return $this->submitHandler->handle(
-                new SubmitExamCommand(
-                    examId: $request->exam_id,
-                    userId: 1, // giả lập auth
-                    answers: $request->answers,
-                )
-            );
-        });
+        $result = $this->submitHandler->handle(
+            new SubmitExamCommand(
+                examId: $request->exam_id,
+                userId: 1, // giả lập auth
+                answers: $request->answers,
+            )
+        );
 
         return response()->json([
             'success' => true,

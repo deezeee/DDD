@@ -3,22 +3,21 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Testcenter\Domain\Question\QuestionRepository;
+use Testcenter\Domain\Submission\SubmissionRepository;
+use Testcenter\Infrastructure\Question\MysqlQuestionRepository;
+use Testcenter\Infrastructure\Submission\MysqlSubmissionRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
-        $this->app->singleton('exam', function ($app) {});
-    }
+        $this->app->singleton(QuestionRepository::class, function () {
+            return app(MysqlQuestionRepository::class);
+        });
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        //
+        $this->app->singleton(SubmissionRepository::class, function () {
+            return app(MysqlSubmissionRepository::class);
+        });
     }
 }

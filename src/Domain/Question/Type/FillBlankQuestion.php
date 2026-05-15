@@ -2,14 +2,14 @@
 
 namespace Testcenter\Domain\Question\Type;
 
-use Testcenter\Domain\Answer\Answer;
-use Testcenter\Domain\Answer\FillBlankAnswer;
 use Testcenter\Domain\Question\AcceptedAnswers;
 use Testcenter\Domain\Question\Question;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
 use Testcenter\Domain\Question\QuestionType;
 use Testcenter\Domain\Score;
+use Testcenter\Domain\Submission\Answer\Answer;
+use Testcenter\Domain\Submission\Answer\FillBlankAnswer;
 use Testcenter\Domain\Submission\GradeResult;
 
 class FillBlankQuestion extends Question

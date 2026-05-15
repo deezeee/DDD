@@ -108,25 +108,6 @@ class QuestionSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'id' => 5,
-                'type' => 'essay',
-                'content' => 'Giải thích sự khác nhau giữa MVC và DDD.',
-
-                'option_a' => null,
-                'option_b' => null,
-                'option_c' => null,
-                'option_d' => null,
-
-                'correct_answer' => null,
-
-                'payload' => json_encode([]),
-
-                'score' => 5,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
         ]);
     }
 }

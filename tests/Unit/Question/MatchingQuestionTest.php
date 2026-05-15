@@ -3,14 +3,14 @@
 namespace Tests\Unit\Question;
 
 use PHPUnit\Framework\TestCase;
-use Testcenter\Domain\Answer\MatchingAnswer;
-use Testcenter\Domain\Answer\TrueFalseAnswer;
 use Testcenter\Domain\Question\MatchingPairs;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
 use Testcenter\Domain\Question\QuestionType;
 use Testcenter\Domain\Question\Type\MatchingQuestion;
 use Testcenter\Domain\Score;
+use Testcenter\Domain\Submission\Answer\MatchingAnswer;
+use Testcenter\Domain\Submission\Answer\TrueFalseAnswer;
 
 class MatchingQuestionTest extends TestCase
 {

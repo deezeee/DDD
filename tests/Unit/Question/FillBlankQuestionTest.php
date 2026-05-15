@@ -4,14 +4,14 @@ namespace Tests\Unit\Question;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Testcenter\Domain\Answer\FillBlankAnswer;
-use Testcenter\Domain\Answer\TrueFalseAnswer;
 use Testcenter\Domain\Question\AcceptedAnswers;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
 use Testcenter\Domain\Question\QuestionType;
 use Testcenter\Domain\Question\Type\FillBlankQuestion;
 use Testcenter\Domain\Score;
+use Testcenter\Domain\Submission\Answer\FillBlankAnswer;
+use Testcenter\Domain\Submission\Answer\TrueFalseAnswer;
 
 class FillBlankQuestionTest extends TestCase
 {

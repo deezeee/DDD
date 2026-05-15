@@ -1,6 +1,6 @@
 <?php
 
-namespace Testcenter\Domain\Answer;
+namespace Testcenter\Domain\Submission\Answer;
 
 interface Answer
 {

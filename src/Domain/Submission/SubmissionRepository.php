@@ -2,10 +2,7 @@
 
 namespace Testcenter\Domain\Submission;
 
-class SubmissionRepository
+interface SubmissionRepository
 {
-    public function save(Submission $submission): void
-    {
-
-    }
+    public function save(Submission $submission): void;
 }
