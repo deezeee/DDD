@@ -19,7 +19,6 @@ class FillBlankQuestionTest extends TestCase
     {
         $question = new FillBlankQuestion(
             id: new QuestionID(1),
-            type: QuestionType::FILL_BLANK,
             text: new QuestionText('What is the capital of Vietnam?'),
             score: new Score(5.0),
             acceptedAnswers: new AcceptedAnswers([
@@ -40,7 +39,6 @@ class FillBlankQuestionTest extends TestCase
     {
         $question = new FillBlankQuestion(
             id: new QuestionID(1),
-            type: QuestionType::FILL_BLANK,
             text: new QuestionText('What is the capital of Vietnam?'),
             score: new Score(10),
             acceptedAnswers: new AcceptedAnswers([
@@ -61,7 +59,6 @@ class FillBlankQuestionTest extends TestCase
     {
         $question = new FillBlankQuestion(
             id: new QuestionID(1),
-            type: QuestionType::FILL_BLANK,
             text: new QuestionText('What is the capital of Vietnam?'),
             score: new Score(10),
             acceptedAnswers: new AcceptedAnswers([

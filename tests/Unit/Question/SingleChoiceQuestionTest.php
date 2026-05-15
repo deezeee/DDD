@@ -19,7 +19,6 @@ class SingleChoiceQuestionTest extends TestCase
     {
         $question = new SingleChoiceQuestion(
             id: new QuestionID(1),
-            type: QuestionType::SINGLE_CHOICE,
             text: new QuestionText('What is the capital of Vietnam?'),
             score: new Score(10.0),
             options: new OptionCollection([
@@ -41,7 +40,6 @@ class SingleChoiceQuestionTest extends TestCase
     {
         $question = new SingleChoiceQuestion(
             id: new QuestionID(1),
-            type: QuestionType::SINGLE_CHOICE,
             text: new QuestionText('What is the capital of Vietnam?'),
             score: new Score(10),
             options: new OptionCollection([
@@ -70,7 +68,6 @@ class SingleChoiceQuestionTest extends TestCase
 
         $question = new SingleChoiceQuestion(
             id: new QuestionID(1),
-            type: QuestionType::SINGLE_CHOICE,
             text: new QuestionText('What is the capital of Vietnam?'),
             score: new Score(10),
             options: $options,
@@ -87,7 +84,6 @@ class SingleChoiceQuestionTest extends TestCase
     {
         $question = new SingleChoiceQuestion(
             id: new QuestionID(1),
-            type: QuestionType::SINGLE_CHOICE,
             text: new QuestionText('What is the capital of Vietnam?'),
             score: new Score(10),
             options: new OptionCollection([

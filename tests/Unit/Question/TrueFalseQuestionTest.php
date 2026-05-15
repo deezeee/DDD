@@ -18,7 +18,6 @@ class TrueFalseQuestionTest extends TestCase
     {
         $question = new TrueFalseQuestion(
             id: new QuestionID(1),
-            type: QuestionType::TRUE_FALSE,
             text: new QuestionText('PHP is a programming language'),
             score: new Score(3.0),
             correct: true,
@@ -36,7 +35,6 @@ class TrueFalseQuestionTest extends TestCase
     {
         $question = new TrueFalseQuestion(
             id: new QuestionID(1),
-            type: QuestionType::TRUE_FALSE,
             text: new QuestionText('PHP is a programming language'),
             score: new Score(10),
             correct: true,
@@ -54,7 +52,6 @@ class TrueFalseQuestionTest extends TestCase
     {
         $question = new TrueFalseQuestion(
             id: new QuestionID(1),
-            type: QuestionType::TRUE_FALSE,
             text: new QuestionText('PHP is a programming language'),
             score: new Score(10),
             correct: true,

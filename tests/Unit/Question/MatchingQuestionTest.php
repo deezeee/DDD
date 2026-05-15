@@ -18,7 +18,6 @@ class MatchingQuestionTest extends TestCase
     {
         $question = new MatchingQuestion(
             id: new QuestionID(1),
-            type: QuestionType::MATCHING,
             text: new QuestionText('Match countries with capitals'),
             score: new Score(5.0),
             pairs: new MatchingPairs([
@@ -43,7 +42,6 @@ class MatchingQuestionTest extends TestCase
     {
         $question = new MatchingQuestion(
             id: new QuestionID(1),
-            type: QuestionType::MATCHING,
             text: new QuestionText('Match countries with capitals'),
             score: new Score(10),
             pairs: new MatchingPairs([
@@ -67,7 +65,6 @@ class MatchingQuestionTest extends TestCase
     {
         $question = new MatchingQuestion(
             id: new QuestionID(1),
-            type: QuestionType::MATCHING,
             text: new QuestionText('Match countries with capitals'),
             score: new Score(10.0),
             pairs: new MatchingPairs([
@@ -95,7 +92,6 @@ class MatchingQuestionTest extends TestCase
     {
         $question = new MatchingQuestion(
             id: new QuestionID(1),
-            type: QuestionType::MATCHING,
             text: new QuestionText('Match countries with capitals'),
             score: new Score(10),
             pairs: new MatchingPairs([
