@@ -13,7 +13,7 @@ use Testcenter\Domain\Question\Type\FillBlankQuestion;
 use Testcenter\Domain\Question\Type\MatchingQuestion;
 use Testcenter\Domain\Question\Type\SingleChoiceQuestion;
 use Testcenter\Domain\Question\Type\TrueFalseQuestion;
-use Testcenter\Domain\Score;
+use Testcenter\Domain\Shared\Score;
 
 class QuestionMapper
 {

@@ -2,12 +2,14 @@
 
 namespace Testcenter\Domain\Submission;
 
+use LogicException;
 use Testcenter\Domain\Exam\ExamID;
 use Testcenter\Domain\Question\Question;
+use Testcenter\Domain\Shared\AggregateRoot;
 use Testcenter\Domain\Submission\Answer\Answer;
 use Testcenter\Domain\User\UserID;
 
-class Submission
+class Submission extends AggregateRoot
 {
     private bool $scored = false;
     private ScoreResult $scoreResult;
@@ -65,7 +67,7 @@ class Submission
     public function getScoreResult(): ScoreResult
     {
         if (!$this->scored) {
-            throw new \LogicException('Submission has not been scored yet.');
+            throw new LogicException('Submission has not been scored yet.');
         }
 
         return $this->scoreResult;

@@ -2,7 +2,7 @@
 
 namespace Testcenter\Domain\Question;
 
-use Testcenter\Domain\Score;
+use Testcenter\Domain\Shared\Score;
 use Testcenter\Domain\Submission\Answer\Answer;
 use Testcenter\Domain\Submission\GradeResult;
 

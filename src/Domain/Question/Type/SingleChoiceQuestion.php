@@ -7,7 +7,7 @@ use Testcenter\Domain\Question\Question;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
 use Testcenter\Domain\Question\QuestionType;
-use Testcenter\Domain\Score;
+use Testcenter\Domain\Shared\Score;
 use Testcenter\Domain\Submission\Answer\Answer;
 use Testcenter\Domain\Submission\Answer\SingleChoiceAnswer;
 use Testcenter\Domain\Submission\GradeResult;

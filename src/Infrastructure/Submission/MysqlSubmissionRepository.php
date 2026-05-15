@@ -9,9 +9,9 @@ use Testcenter\Domain\Submission\SubmissionRepository;
 
 class MysqlSubmissionRepository implements SubmissionRepository
 {
-    public function save(Submission $submission): void
+    public function save(Submission $submission): Submission
     {
-        DB::transaction(function () use ($submission) {
+        return DB::transaction(function () use ($submission) {
             $submissionModel = \App\Models\Submission::query()
                 ->create([
                     'user_id' => $submission->getUserId()->value(),
@@ -30,7 +30,7 @@ class MysqlSubmissionRepository implements SubmissionRepository
                     ]);
             }
 
-            return $submissionModel->id;
+            return $submissionModel;
         });
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Testcenter\Domain;
+namespace Testcenter\Domain\Shared;
 
 class Score
 {

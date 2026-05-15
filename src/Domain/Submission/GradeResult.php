@@ -2,7 +2,7 @@
 
 namespace Testcenter\Domain\Submission;
 
-use Testcenter\Domain\Score;
+use Testcenter\Domain\Shared\Score;
 
 class GradeResult
 {

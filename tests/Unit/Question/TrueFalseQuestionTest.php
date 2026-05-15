@@ -6,9 +6,8 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
-use Testcenter\Domain\Question\QuestionType;
 use Testcenter\Domain\Question\Type\TrueFalseQuestion;
-use Testcenter\Domain\Score;
+use Testcenter\Domain\Shared\Score;
 use Testcenter\Domain\Submission\Answer\FillBlankAnswer;
 use Testcenter\Domain\Submission\Answer\TrueFalseAnswer;
 
