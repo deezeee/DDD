@@ -72,7 +72,6 @@ class Submission extends AggregateRoot
             $totalScore += $score->score()->value();
         }
 
-
         $this->scored = true;
         $this->scoreResult = new ScoreResult($totalScore, $answerScores);
 
