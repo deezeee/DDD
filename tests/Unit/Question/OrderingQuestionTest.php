@@ -40,7 +40,7 @@ class OrderingQuestionTest extends TestCase
         $result = $question->grade(new OrderingAnswer(['Plan', 'Test', 'Code']));
 
         $this->assertFalse($result->isCorrect());
-        $this->assertEquals(3.0, $result->score()->value());
+        $this->assertEquals(0, $result->score()->value());
     }
 
     public function test_it_throws_exception_when_answer_type_is_invalid(): void

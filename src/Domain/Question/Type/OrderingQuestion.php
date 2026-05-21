@@ -32,20 +32,14 @@ class OrderingQuestion extends Question
             throw new \InvalidArgumentException('Invalid answer type');
         }
 
-        $correct = 0;
+        $correct = true;
         foreach (array_values($answer->value()) as $index => $item) {
-            if (isset($this->correctOrder[$index]) && $this->correctOrder[$index] === $item) {
-                $correct++;
+            if (!isset($this->correctOrder[$index]) || $this->correctOrder[$index] !== $item) {
+                $correct = false;
             }
         }
 
-        $total = count($this->correctOrder);
-        $earnedScore = ($correct / $total) * $this->score()->value();
-
-        return new GradeResult(
-            $correct === $total,
-            new Score($earnedScore)
-        );
+        return $correct ? new GradeResult(true, $this->score()) : new GradeResult(false, new Score(0));
     }
 
     public function correctOrder(): array
