@@ -3,6 +3,7 @@
 namespace Tests\Unit\Question;
 
 use PHPUnit\Framework\TestCase;
+use Testcenter\Domain\Question\Pair\MatchingPair;
 use Testcenter\Domain\Question\Pair\MatchingPairs;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
@@ -20,8 +21,8 @@ class MatchingQuestionTest extends TestCase
             text: new QuestionText('Match countries with capitals'),
             score: new Score(5.0),
             pairs: new MatchingPairs([
-                'Vietnam' => 'Hanoi',
-                'Japan' => 'Tokyo',
+                new MatchingPair('Vietnam', 'Hanoi'),
+                new MatchingPair('Japan', 'Tokyo'),
             ]),
         );
 
@@ -44,8 +45,8 @@ class MatchingQuestionTest extends TestCase
             text: new QuestionText('Match countries with capitals'),
             score: new Score(10),
             pairs: new MatchingPairs([
-                'Vietnam' => 'Hanoi',
-                'Japan' => 'Tokyo',
+                new MatchingPair('Vietnam', 'Hanoi'),
+                new MatchingPair('Japan', 'Tokyo'),
             ]),
         );
 
@@ -67,10 +68,10 @@ class MatchingQuestionTest extends TestCase
             text: new QuestionText('Match countries with capitals'),
             score: new Score(10.0),
             pairs: new MatchingPairs([
-                'Vietnam' => 'Hanoi',
-                'Japan' => 'Tokyo',
-                'Korea' => 'Seoul',
-                'France' => 'Paris',
+                new MatchingPair('Vietnam', 'Hanoi'),
+                new MatchingPair('Japan', 'Tokyo'),
+                new MatchingPair('Korea', 'Seoul'),
+                new MatchingPair('France', 'Paris'),
             ]),
         );
 
@@ -94,7 +95,7 @@ class MatchingQuestionTest extends TestCase
             text: new QuestionText('Match countries with capitals'),
             score: new Score(10),
             pairs: new MatchingPairs([
-                'Vietnam' => 'Hanoi',
+                new MatchingPair('Vietnam', 'Hanoi'),
             ]),
         );
 
