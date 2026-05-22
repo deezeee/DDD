@@ -9,7 +9,6 @@ use Testcenter\Domain\Submission\Submission;
 
 class ScoringService
 {
-
     public function score(Submission $submission, QuestionCollection $questions): ScoreResult
     {
         $totalScore = 0;
