@@ -7,7 +7,7 @@ use Testcenter\Domain\Question\Exception\QuestionNotFoundException;
 interface QuestionRepository
 {
     /** @return array<Question> */
-    public function findByIds(array $ids): array;
+    public function findQuestionsForExam(array $ids): array;
 
     /**
      * @throws QuestionNotFoundException

@@ -34,7 +34,7 @@ class SubmitExamHandler
             throw new InvalidArgumentException('Exam is not active');
         }
 
-        $questions = $this->questionRepository->findByIds(array_keys($command->answers));
+        $questions = $this->questionRepository->findQuestionsForExam(array_keys($command->answers));
         $answers = $this->makeAnswers($questions, $command->answers);
 
         $submission = Submission::submit(

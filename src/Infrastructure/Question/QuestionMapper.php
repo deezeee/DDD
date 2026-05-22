@@ -3,8 +3,9 @@
 namespace Testcenter\Infrastructure\Question;
 
 use Testcenter\Domain\Question\AcceptedAnswers;
-use Testcenter\Domain\Question\MatchingPairs;
 use Testcenter\Domain\Question\OptionCollection;
+use Testcenter\Domain\Question\Pair\MatchingPair;
+use Testcenter\Domain\Question\Pair\MatchingPairs;
 use Testcenter\Domain\Question\Question;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
@@ -57,7 +58,7 @@ class QuestionMapper
                 id: new QuestionID($questionEloquent->id),
                 text: new QuestionText($questionEloquent->content),
                 score: new Score($questionEloquent->score),
-                pairs: new MatchingPairs($questionEloquent->payload['pairs']),
+                pairs: new MatchingPairs($this->getPairs($questionEloquent->payload['pairs'])),
             ),
             QuestionType::ORDERING =>
             new OrderingQuestion(
@@ -68,5 +69,15 @@ class QuestionMapper
             ),
             default => throw new \Exception('Unsupported question type: ' . $questionEloquent->type),
         };
+    }
+
+    private function getPairs(array $pairs): array
+    {
+        $result = [];
+        foreach ($pairs as $left => $right) {
+            $result[] = new MatchingPair($left, $right);
+        }
+
+        return $result;
     }
 }

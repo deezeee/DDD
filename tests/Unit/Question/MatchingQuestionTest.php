@@ -3,7 +3,7 @@
 namespace Tests\Unit\Question;
 
 use PHPUnit\Framework\TestCase;
-use Testcenter\Domain\Question\MatchingPairs;
+use Testcenter\Domain\Question\Pair\MatchingPairs;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
 use Testcenter\Domain\Question\Type\MatchingQuestion;

@@ -2,7 +2,7 @@
 
 namespace Testcenter\Domain\Question\Type;
 
-use Testcenter\Domain\Question\MatchingPairs;
+use Testcenter\Domain\Question\Pair\MatchingPairs;
 use Testcenter\Domain\Question\Question;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionText;
@@ -31,9 +31,7 @@ class MatchingQuestion extends Question
 
         $correct = 0;
         foreach ($answer->value() as $left => $right) {
-            if (
-                $this->pairs->isCorrect($left, $right)
-            ) {
+            if ($this->pairs->isCorrect($left, $right)) {
                 $correct++;
             }
         }

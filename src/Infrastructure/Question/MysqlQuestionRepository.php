@@ -17,7 +17,7 @@ class MysqlQuestionRepository implements QuestionRepository
     /**
      * @return QuestionEntity[]
      */
-    public function findByIds(array $ids): array
+    public function findQuestionsForExam(array $ids): array
     {
         $questionEloquents = Question::query()
             ->whereIn('id', $ids)
