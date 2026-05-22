@@ -7,11 +7,12 @@ use Testcenter\Domain\Exam\ExamID;
 use Testcenter\Domain\Exam\Exception\ExamNotActiveException;
 use Testcenter\Domain\Shared\AggregateRoot;
 use Testcenter\Domain\Submission\Answer\AnswerCollection;
+use Testcenter\Domain\Submission\Exception\SubmissionException;
 use Testcenter\Domain\User\UserID;
 
 class Submission extends AggregateRoot
 {
-    private ScoreResult $scoreResult;
+    private ?ScoreResult $scoreResult = null;
 
     public function __construct(
         private readonly UserID $userId,
@@ -58,13 +59,17 @@ class Submission extends AggregateRoot
         return $submission;
     }
 
-    public function applyScore($scoreResult): void
+    public function applyScore(ScoreResult $scoreResult): void
     {
         $this->scoreResult = $scoreResult;
     }
 
     public function getScoreResult(): ScoreResult
     {
+        if ($this->scoreResult === null) {
+            throw new SubmissionException('Score result not available');
+        }
+
         return $this->scoreResult;
     }
 }
