@@ -2,10 +2,9 @@
 
 namespace Testcenter\Application\Submission\UseCase;
 
-use InvalidArgumentException;
 use Testcenter\Application\Submission\SubmissionResponse;
+use Testcenter\Domain\AppException;
 use Testcenter\Domain\Exam\ExamRepository;
-use Testcenter\Domain\Exam\Exception\ExamException;
 use Testcenter\Domain\Question\Question;
 use Testcenter\Domain\Question\QuestionCollection;
 use Testcenter\Domain\Question\QuestionID;
@@ -28,7 +27,7 @@ class SubmitExamHandler
     }
 
     /**
-     * @throws ExamException
+     * @throws AppException
      */
     public function handle(SubmitExamCommand $command): SubmissionResponse
     {
@@ -53,6 +52,9 @@ class SubmitExamHandler
         );
     }
 
+    /**
+     * @throws SubmissionException
+     */
     private function makeAnswers(QuestionCollection $questions, array $userAnswers): array
     {
         $result = [];
