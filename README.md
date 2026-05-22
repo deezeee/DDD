@@ -1,286 +1,368 @@
-# Exam Engine — MVC vs DDD + Clean Architecture Workshop
+# TestCenter – DDD + Clean Architecture Demo
 
-## 🎯 Goal
+## Giới thiệu
 
-Repository này được xây dựng nhằm mục đích:
+Đây là project demo xây dựng hệ thống thi online (Test Center) sử dụng:
 
-* Demo sự khác biệt giữa:
-
-  * Traditional MVC
-  * DDD + Clean Architecture
-
-* Training team backend về:
-
-  * Rich Domain Model
-  * Entity behavior
-  * Value Object
-  * Aggregate Root
-  * Repository Pattern
-  * Domain Event
-  * Infrastructure separation
-
-* Minh họa:
-
-  * Vì sao business complexity làm MVC phình logic rất nhanh
-  * Vì sao DDD phù hợp với các bài toán enterprise
-
----
-
-# 📚 Business Problem
-
-Đây là hệ thống Exam Engine.
-
-System hỗ trợ nhiều loại câu hỏi:
-
-* multiple_choice
-* true_false
-* fill_blank
-* essay
-* matching
-
-Mỗi loại:
-
-* có cấu trúc answer khác nhau
-* có logic grading khác nhau
-* có rule business khác nhau
-
----
-
-# ❌ Traditional MVC Problem
-
-Ban đầu MVC rất ổn:
-
-```php
-if ($question->type === 'multiple_choice') {
-    ...
-}
-```
-
-Nhưng khi business phát triển:
-
-* partial score
-* matching score
-* AI essay scoring
-* anti-cheat
-* time bonus
-* negative marking
-* adaptive exam
-
-Logic sẽ bắt đầu:
-
-* mọc if-else everywhere
-* service class become God object
-* duplicated logic
-* khó test
-* khó mở rộng
-
----
-
-# ✅ DDD + Clean Architecture Solution
-
-Repository này implement:
-
+* Domain Driven Design (DDD)
+* Clean Architecture
 * Rich Domain Model
-* Polymorphism
-* Aggregate Root
-* Value Object
-* Domain Event
-* Repository abstraction
-* Infrastructure isolation
+* Tactical DDD Pattern
+* Laravel 10
+* PHP 8.1+
+
+Mục tiêu của project:
+
+* Demo cách evolve từ MVC/service layer sang DDD
+* Giảm business logic phình trong service
+* Tăng khả năng mở rộng business
+* Tách biệt business với framework/infrastructure
+* Làm tài liệu training nội bộ về DDD + Clean Architecture
 
 ---
 
-# 🏗️ Architecture
+# Các bài toán hiện tại
 
-```text
-src
-├── Domain
-│   ├── Question
-│   ├── Submission
-│   ├── Shared
-│   └── Score
-│
-├── Application
-│   └── Submission
-│
-├── Infrastructure
-│   ├── Question
-│   ├── Submission
-│   └── Event
-│
-└── Presentation
-    └── Http
+Hệ thống hiện tại hỗ trợ:
+
+## Question Types
+
+* Single Choice Question
+* Multiple Choice Question
+* Fill Blank Question
+* Matching Question
+
+---
+
+## Exam Flow
+
+* Tạo đề thi
+* Submit bài thi
+* Chấm điểm
+* Tính tổng điểm
+* Domain Event khi submit
+
+---
+
+## Invariant Protection
+
+Project đã implement domain invariant:
+
+* Không cho negative score
+* Không cho duplicate multiple choice answer
+* Không cho empty fill blank answer
+* Không cho invalid matching pair
+
+---
+
+# Kiến trúc tổng quan
+
+```txt
+src/
+├── Application/
+├── Domain/
+└── Infrastructure/
 ```
 
 ---
 
-# 🎯 Layer Responsibility
+# Clean Architecture
 
-## Domain
-
-Contains:
-
-* business rules
-* entities
-* value objects
-* aggregate roots
-* domain events
-
-Domain DOES NOT know:
-
-* Laravel
-* Eloquent
-* HTTP
-* MySQL
+```txt
+Controller
+  -> Application
+      -> Domain
+          <- Infrastructure
+```
 
 ---
 
-## Application
+# Dependency Rule
 
-Contains:
+```txt
+Outer -> Inner
+```
 
-* use cases
-* orchestration
-* transaction boundary
+Domain layer:
 
-No business logic here.
-
----
-
-## Infrastructure
-
-Contains:
-
-* Eloquent
-* repositories implementation
-* event publisher
-* persistence mapper
+* không biết Laravel
+* không biết Database
+* không biết Redis
+* không biết HTTP
+* không biết Queue
 
 ---
 
-## Presentation
+# Domain Layer
 
-Contains:
+Chứa:
 
-* controller
-* request validation
-* API response
-
----
-
-# 🧠 Important DDD Concepts
-
----
-
-## 1. Entity ≠ Database Table
+* Entity
+* Value Object
+* Aggregate
+* Domain Service
+* Domain Event
+* Repository Interface
 
 Ví dụ:
 
-```text
-Question
+```txt
+Domain/
+├── Question/
+├── Submission/
+├── Shared/
+└── Exam/
 ```
-
-Là business concept.
-
-KHÔNG phải:
-
-* Eloquent model
-* database row
 
 ---
 
-## 2. Rich Domain Model
+# Application Layer
 
-Business behavior nằm trong entity:
+Application layer chỉ orchestration:
 
-```php
-$question->grade($answer)
+* load aggregate
+* execute business behavior
+* persist
+* publish event
+* return response DTO
+
+Ví dụ:
+
+```txt
+SubmitExamHandler
 ```
-
-KHÔNG nằm trong:
-
-* controller
-* service
-* helper
 
 ---
 
-## 3. Polymorphism
+# Infrastructure Layer
 
-Mỗi question type tự implement grading riêng:
+Implement:
+
+* Repository
+* Event Bus
+* ORM
+* Persistence
+* External Service
+
+Ví dụ:
+
+```txt
+EloquentQuestionRepository
+LaravelEventBus
+```
+
+---
+
+# Tactical DDD được áp dụng
+
+## Rich Domain Model
+
+Question tự behavior:
 
 ```php
-MultipleChoiceQuestion
-MatchingQuestion
+$question->grade($answer);
+$question->createAnswer($payload);
+```
+
+---
+
+## Value Object
+
+Ví dụ:
+
+```txt
+Score
+QuestionText
+AcceptedAnswers
+MatchingPair
+UserID
+ExamID
+```
+
+---
+
+## Aggregate
+
+Ví dụ:
+
+```txt
+Submission Aggregate
+```
+
+chịu trách nhiệm:
+
+* consistency boundary
+* submission lifecycle
+* domain event recording
+
+---
+
+## Domain Service
+
+Ví dụ:
+
+```txt
+ScoringService
+```
+
+Dùng cho:
+
+* cross entity logic
+* grading workflow
+
+---
+
+## Domain Event
+
+Ví dụ:
+
+```txt
+ExamSubmitted
+```
+
+Flow:
+
+```txt
+Domain
+ -> recordEvent()
+
+Application
+ -> publish()
+```
+
+---
+
+# Điểm nổi bật của project
+
+## 1. Tránh Anemic Domain Model
+
+Business logic nằm trong Domain.
+
+Không nằm ở:
+
+```txt
+God Service
+```
+
+---
+
+## 2. Giảm if/else business logic
+
+Sử dụng:
+
+```txt
+Polymorphism
+```
+
+thay vì:
+
+```php
+switch ($question->type)
+```
+
+---
+
+## 3. Scale feature tốt hơn
+
+Khi thêm loại question mới:
+
+```txt
+EssayQuestion
 TrueFalseQuestion
 ```
 
-Thay vì:
+không cần sửa logic cũ.
+
+---
+
+## 4. Domain tự bảo vệ state
+
+Ví dụ:
 
 ```php
-if ($type === ...)
+new Score(-10);
 ```
 
----
-
-## 4. Value Objects
-
-Examples:
-
-* Score
-* QuestionID
-* QuestionType
-* MatchingPairs
-
-Giúp:
-
-* expressive model
-* validation encapsulation
-* immutable business concepts
+=> Exception
 
 ---
 
-## 5. Aggregate Root
+# So sánh MVC vs DDD
 
-```text
-Submission
-```
-
-Protect business invariant:
-
-* answer uniqueness
-* valid question reference
-* score consistency
-
----
-
-## 6. Domain Event
-
-Business event:
-
-```text
-SubmissionCreated
-```
-
-Được emit từ domain behavior.
-
-KHÔNG emit từ controller.
+| MVC/Service Layer                  | DDD + Clean Architecture           |
+| ---------------------------------- | ---------------------------------- |
+| Business logic phình trong service | Business behavior nằm trong domain |
+| Nhiều if/else                      | Polymorphism                       |
+| Khó scale business                 | Scale tốt hơn                      |
+| Coupling cao                       | Boundary rõ ràng                   |
+| Entity chỉ chứa data               | Rich Domain Model                  |
+| Framework-centric                  | Domain-centric                     |
 
 ---
 
-# 🚀 Installation
+# Hướng mở rộng trong tương lai
+
+Project được thiết kế để dễ mở rộng cho:
+
+## Exam Features
+
+* Weighted Score
+* Retry Policy
+* Time Limit
+* Random Question
+* Section Score
+* AI Grading
+* Essay Question
+* Partial Grading
 
 ---
 
-## 1. Clone project
+## Anti Cheat
+
+* Detect tab switch
+* Detect copy paste
+* Webcam monitoring
+* Suspicious behavior detection
+
+---
+
+## CQRS / Analytics
+
+* Leaderboard
+* Ranking
+* Analytics
+* Question difficulty
+* Completion rate
+
+---
+
+## Multi Tenant
+
+* Nhiều trung tâm thi
+* Tenant policy riêng
+* Scoring strategy riêng
+
+---
+
+# Yêu cầu hệ thống
+
+* PHP 8.1+
+* Composer
+* Laravel
+
+---
+
+# Cài đặt project
+
+## Clone project
 
 ```bash
-git clone <repo>
+git clone <repository-url>
 ```
 
 ---
 
-## 2. Install dependencies
+## Install dependency
 
 ```bash
 composer install
@@ -288,31 +370,19 @@ composer install
 
 ---
 
-## 3. Setup environment
+## Copy env
 
 ```bash
 cp .env.example .env
 ```
 
-Update DB config:
-
-```env
-DB_DATABASE=exam_engine
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
 ---
 
-## 4. Generate app key
+## Generate app key
 
 ```bash
 php artisan key:generate
 ```
-
----
-
-# 🗄️ Database Setup
 
 ---
 
@@ -324,150 +394,81 @@ php artisan migrate
 
 ---
 
-## Run seeders
+## Run seed
 
 ```bash
 php artisan db:seed
 ```
 
-Seeder sẽ tạo:
+---
 
-* sample questions
-* sample exams
-* sample submissions
+## Start server
+
+```bash
+php artisan serve
+```
 
 ---
 
-# 🧪 Run Unit Tests
+# Chạy test
 
 ```bash
 php artisan test
 ```
 
----
-
-# 📬 API Example
-
-## Submit Exam
-
-### Request
+hoặc:
 
 ```bash
-curl --location 'http://localhost/api/exams/submit' \
---header 'Content-Type: application/json' \
---data '{
-    "user_id": 1,
-    "exam_id": 1,
-    "answers": [
-        {
-            "question_id": 1,
-            "type": "multiple_choice",
-            "answer": "B"
-        },
-        {
-            "question_id": 2,
-            "type": "true_false",
-            "answer": true
-        },
-        {
-            "question_id": 3,
-            "type": "fill_blank",
-            "answer": "Laravel"
-        },
-        {
-            "question_id": 4,
-            "type": "matching",
-            "answer": {
-                "A": "1",
-                "B": "2"
-            }
-        }
-    ]
-}'
+vendor/bin/phpunit
 ```
 
 ---
 
-# 🧪 Workshop Flow
+# Các concept DDD được demo trong project
+
+| Concept              | Có áp dụng |
+| -------------------- | ---------- |
+| Entity               | ✅          |
+| Value Object         | ✅          |
+| Aggregate            | ✅          |
+| Domain Service       | ✅          |
+| Domain Event         | ✅          |
+| Repository           | ✅          |
+| Rich Domain Model    | ✅          |
+| Invariant Protection | ✅          |
+| Clean Architecture   | ✅          |
+| Polymorphism         | ✅          |
 
 ---
 
-## Part 1 — Traditional MVC
+# Mục tiêu training nội bộ
 
-Demo:
+Project này được xây dựng để:
 
-* fat controller
-* giant service
-* if-else explosion
-* Eloquent-driven business logic
-
----
-
-## Part 2 — Problems
-
-Show:
-
-* adding new question type
-* modifying scoring rule
-* duplicated logic
-* testing pain
+* training DDD
+* training Clean Architecture
+* demo scaling business complexity
+* demo refactor từ MVC sang DDD
+* demo tactical DDD thực tế
 
 ---
 
-## Part 3 — Refactor to DDD
+# Điều quan trọng nhất
 
-Introduce:
+DDD không phải:
 
-* Entity
-* Value Object
-* Aggregate
-* Repository
-* Domain Event
+```txt
+đổi tên folder
+```
 
----
+DDD là:
 
-## Part 4 — Final Architecture
-
-Show:
-
-* clean dependency direction
-* infrastructure isolation
-* polymorphism
-* rich domain model
-
----
-
-# 💥 Key Takeaways
-
----
-
-## MVC focuses on:
-
-```text
-database structure
+```txt
+Model business complexity bằng behavior
 ```
 
 ---
 
-## DDD focuses on:
+# License
 
-```text
-business behavior
-```
-
----
-
-## CRUD complexity ≠ business complexity
-
-DDD becomes valuable when:
-
-```text
-business rules grow faster than database schema
-```
-
----
-
-# 🎯 Final Insight
-
-> DDD không giải quyết CRUD complexity
-> DDD giải quyết behavior complexity.
+liem04
