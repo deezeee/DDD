@@ -5,8 +5,10 @@ namespace Testcenter\Application\Submission\UseCase;
 use InvalidArgumentException;
 use Testcenter\Application\Submission\SubmissionResponse;
 use Testcenter\Domain\Exam\ExamRepository;
-use Testcenter\Domain\Exam\Exception\ExamNotFoundException;
+use Testcenter\Domain\Exam\Exception\ExamException;
 use Testcenter\Domain\Question\Question;
+use Testcenter\Domain\Question\QuestionCollection;
+use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionRepository;
 use Testcenter\Domain\Shared\DomainEventPublisher;
 use Testcenter\Domain\Submission\Service\ScoringService;
@@ -25,7 +27,7 @@ class SubmitExamHandler
     }
 
     /**
-     * @throws ExamNotFoundException
+     * @throws ExamException
      */
     public function handle(SubmitExamCommand $command): SubmissionResponse
     {
@@ -40,8 +42,8 @@ class SubmitExamHandler
         );
 
         $scoreResult = $this->scoringService->score($submission, $questions);
-
-        $this->submissionRepository->save($submission, $scoreResult);
+        $submission->applyScore($scoreResult);
+        $this->submissionRepository->save($submission);
 
         $this->publisher->publish(...$submission->releaseEvents());
 
@@ -50,12 +52,12 @@ class SubmitExamHandler
         );
     }
 
-    private function makeAnswers(array $questions, array $userAnswers): array
+    private function makeAnswers(QuestionCollection $questions, array $userAnswers): array
     {
         $result = [];
         foreach ($userAnswers as $questionId => $userAnswer) {
             /** @var Question $question */
-            $question = $questions[$questionId] ?? null;
+            $question = $questions->findByID(new QuestionID($questionId));
             if (!$question) {
                 throw new InvalidArgumentException("Question with ID $questionId not found");
             }

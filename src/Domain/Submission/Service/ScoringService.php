@@ -3,13 +3,14 @@
 namespace Testcenter\Domain\Submission\Service;
 
 use Testcenter\Domain\Question\Question;
+use Testcenter\Domain\Question\QuestionCollection;
 use Testcenter\Domain\Submission\ScoreResult;
 use Testcenter\Domain\Submission\Submission;
 
 class ScoringService
 {
 
-    public function score(Submission $submission, array $questions): ScoreResult
+    public function score(Submission $submission, QuestionCollection $questions): ScoreResult
     {
         $totalScore = 0;
         $answerScores = [];

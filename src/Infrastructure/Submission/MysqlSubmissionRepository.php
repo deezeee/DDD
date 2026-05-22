@@ -4,15 +4,15 @@ namespace Testcenter\Infrastructure\Submission;
 
 use App\Models\SubmissionAnswer;
 use Illuminate\Support\Facades\DB;
-use Testcenter\Domain\Submission\ScoreResult;
 use Testcenter\Domain\Submission\Submission;
 use Testcenter\Domain\Submission\SubmissionRepository;
 
 class MysqlSubmissionRepository implements SubmissionRepository
 {
-    public function save(Submission $submission, ScoreResult $scoreResult): Submission
+    public function save(Submission $submission): void
     {
-        return DB::transaction(function () use ($submission, $scoreResult) {
+        DB::transaction(function () use ($submission) {
+            $scoreResult = $submission->getScoreResult();
             $submissionModel = \App\Models\Submission::query()
                 ->create([
                     'user_id' => $submission->getUserId()->value(),

@@ -5,6 +5,7 @@ namespace Testcenter\Infrastructure\Question;
 use App\Models\Question;
 use Testcenter\Domain\Question\Exception\QuestionNotFoundException;
 use Testcenter\Domain\Question\Question as QuestionEntity;
+use Testcenter\Domain\Question\QuestionCollection;
 use Testcenter\Domain\Question\QuestionRepository;
 
 class MysqlQuestionRepository implements QuestionRepository
@@ -14,10 +15,7 @@ class MysqlQuestionRepository implements QuestionRepository
     ) {
     }
 
-    /**
-     * @return QuestionEntity[]
-     */
-    public function findQuestionsForExam(array $ids): array
+    public function findQuestionsForExam(array $ids): QuestionCollection
     {
         $questionEloquents = Question::query()
             ->whereIn('id', $ids)
@@ -25,10 +23,10 @@ class MysqlQuestionRepository implements QuestionRepository
 
         $questionEntities = [];
         foreach ($questionEloquents as $questionEloquent) {
-            $questionEntities[$questionEloquent->id] = $this->questionMapper->toDomain($questionEloquent);
+            $questionEntities[] = $this->questionMapper->toDomain($questionEloquent);
         }
 
-        return $questionEntities;
+        return new QuestionCollection($questionEntities);
     }
 
     public function findById(int $id): QuestionEntity

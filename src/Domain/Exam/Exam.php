@@ -3,8 +3,9 @@
 namespace Testcenter\Domain\Exam;
 
 use Testcenter\Domain\Exam\Exception\ExamCannotPublishException;
+use Testcenter\Domain\Shared\AggregateRoot;
 
-class Exam
+class Exam extends AggregateRoot
 {
     public function __construct(
         private readonly ExamID $id,
