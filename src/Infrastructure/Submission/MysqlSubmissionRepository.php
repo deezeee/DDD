@@ -45,6 +45,6 @@ class MysqlSubmissionRepository implements SubmissionRepository
             return $answer ? 'true' : 'false';
         }
 
-        return json_encode((string)$answer, JSON_UNESCAPED_UNICODE);;
+        return json_encode((string)$answer, JSON_UNESCAPED_UNICODE);
     }
 }
