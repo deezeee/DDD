@@ -19,19 +19,20 @@ class AnswerCollection implements Countable, \IteratorAggregate
     public function __construct(array $answers)
     {
         foreach ($answers as $questionId => $answer) {
-            $this->add($questionId, $answer);
+            $this->add(new QuestionID($questionId), $answer);
         }
     }
 
-    public function add(int $questionId, Answer $answer): void
+    public function add(QuestionID $questionId, Answer $answer): void
     {
-        if (isset($this->answers[$questionId])) {
+        $questionIdValue = $questionId->value();
+        if (isset($this->answers[$questionIdValue])) {
             throw new \LogicException(
-                "Duplicate answer for question {$questionId}"
+                "Duplicate answer for question {$questionIdValue}"
             );
         }
 
-        $this->answers[$questionId] = $answer;
+        $this->answers[$questionIdValue] = $answer;
     }
 
     public function findByQuestionId(QuestionID $questionId): ?Answer

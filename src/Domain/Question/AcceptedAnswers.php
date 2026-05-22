@@ -5,7 +5,7 @@ namespace Testcenter\Domain\Question;
 class AcceptedAnswers
 {
     public function __construct(
-        public readonly array $answers
+        private readonly array $answers
     ) {
     }
 
