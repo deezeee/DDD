@@ -47,4 +47,5 @@ abstract class Question
     }
 
     abstract public function grade(Answer $answer): GradeResult;
+    abstract public function createAnswer(mixed $userAnswer): Answer;
 }

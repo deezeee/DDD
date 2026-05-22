@@ -35,4 +35,9 @@ class FillBlankQuestion extends Question
 
         return new GradeResult(false, new Score(0));
     }
+
+    public function createAnswer(mixed $userAnswer): Answer
+    {
+        return new FillBlankAnswer($userAnswer);
+    }
 }

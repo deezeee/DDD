@@ -4,19 +4,20 @@ namespace Testcenter\Infrastructure\Submission;
 
 use App\Models\SubmissionAnswer;
 use Illuminate\Support\Facades\DB;
+use Testcenter\Domain\Submission\ScoreResult;
 use Testcenter\Domain\Submission\Submission;
 use Testcenter\Domain\Submission\SubmissionRepository;
 
 class MysqlSubmissionRepository implements SubmissionRepository
 {
-    public function save(Submission $submission): Submission
+    public function save(Submission $submission, ScoreResult $scoreResult): Submission
     {
-        return DB::transaction(function () use ($submission) {
+        return DB::transaction(function () use ($submission, $scoreResult) {
             $submissionModel = \App\Models\Submission::query()
                 ->create([
                     'user_id' => $submission->getUserId()->value(),
                     'exam_id' => $submission->getExamId()->value(),
-                    'score' => $submission->getScoreResult()->total(),
+                    'score' => $scoreResult->total(),
                     'status' => 'submitted',
                     'submitted_at' => now(),
                 ]);
@@ -26,7 +27,7 @@ class MysqlSubmissionRepository implements SubmissionRepository
                         'submission_id' => $submissionModel->id,
                         'question_id' => $questionId,
                         'answer' => $this->normalizeAnswer($answer->value()),
-                        'score' => $submission->getScoreResult()->answerScores()[$questionId]->score()->value(),
+                        'score' => $scoreResult->answerScores()[$questionId]->score()->value(),
                     ]);
             }
 

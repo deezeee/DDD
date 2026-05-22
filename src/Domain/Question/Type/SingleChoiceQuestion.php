@@ -39,4 +39,9 @@ class SingleChoiceQuestion extends Question
     {
         return $this->options;
     }
+
+    public function createAnswer(mixed $userAnswer): Answer
+    {
+        return new SingleChoiceAnswer($userAnswer);
+    }
 }

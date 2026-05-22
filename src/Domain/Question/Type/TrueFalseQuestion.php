@@ -32,4 +32,9 @@ class TrueFalseQuestion extends Question
             ? new GradeResult(true, $this->score())
             : new GradeResult(false, new Score(0));
     }
+
+    public function createAnswer(mixed $userAnswer): Answer
+    {
+        return new TrueFalseAnswer($userAnswer);
+    }
 }

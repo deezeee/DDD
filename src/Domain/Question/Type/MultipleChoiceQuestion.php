@@ -51,4 +51,9 @@ class MultipleChoiceQuestion extends Question
 
         return $answers;
     }
+
+    public function createAnswer(mixed $userAnswer): Answer
+    {
+        return new MultipleChoiceAnswer($userAnswer);
+    }
 }

@@ -5,7 +5,7 @@ namespace Testcenter\Domain\Submission\Event;
 use Testcenter\Domain\Shared\DomainEvent;
 use Testcenter\Domain\Submission\Submission;
 
-class JustHasNewSubmission implements DomainEvent
+class ExamSubmitted implements DomainEvent
 {
     public function __construct(
         private readonly Submission $submission,

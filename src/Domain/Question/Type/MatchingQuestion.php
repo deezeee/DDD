@@ -47,4 +47,9 @@ class MatchingQuestion extends Question
             new Score(($correct / $this->pairs->total()) * $this->score->value())
         );
     }
+
+    public function createAnswer(mixed $userAnswer): Answer
+    {
+        return new MatchingAnswer($userAnswer);
+    }
 }

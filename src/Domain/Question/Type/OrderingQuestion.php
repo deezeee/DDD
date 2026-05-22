@@ -46,4 +46,9 @@ class OrderingQuestion extends Question
     {
         return $this->correctOrder;
     }
+
+    public function createAnswer(mixed $userAnswer): Answer
+    {
+        return new OrderingAnswer($userAnswer);
+    }
 }
