@@ -30,16 +30,12 @@ class SubmitExamHandler
     public function handle(SubmitExamCommand $command): SubmissionResponse
     {
         $exam = $this->examRepository->findById($command->examId);
-        if (!$exam->isActive()) {
-            throw new InvalidArgumentException('Exam is not active');
-        }
-
         $questions = $this->questionRepository->findQuestionsForExam(array_keys($command->answers));
         $answers = $this->makeAnswers($questions, $command->answers);
 
         $submission = Submission::submit(
             userId: $command->userId,
-            examId: $command->examId,
+            exam: $exam,
             answers: $answers,
         );
 

@@ -2,6 +2,7 @@
 
 namespace Testcenter\Domain\Submission;
 
+use Testcenter\Domain\Exam\Exam;
 use Testcenter\Domain\Exam\ExamID;
 use Testcenter\Domain\Shared\AggregateRoot;
 use Testcenter\Domain\Submission\Answer\AnswerCollection;
@@ -33,12 +34,16 @@ class Submission extends AggregateRoot
 
     public static function submit(
         int $userId,
-        int $examId,
+        Exam $exam,
         array $answers
     ): self {
+        if (!$exam->isActive()) {
+            throw new \InvalidArgumentException('Exam is not active');
+        }
+
         $submission = new self(
             userId: new UserID($userId),
-            examId: new ExamID($examId),
+            examId: $exam->id(),
             answers: new AnswerCollection($answers)
         );
 
