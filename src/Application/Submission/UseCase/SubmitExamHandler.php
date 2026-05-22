@@ -11,6 +11,7 @@ use Testcenter\Domain\Question\QuestionCollection;
 use Testcenter\Domain\Question\QuestionID;
 use Testcenter\Domain\Question\QuestionRepository;
 use Testcenter\Domain\Shared\DomainEventPublisher;
+use Testcenter\Domain\Submission\Exception\SubmissionException;
 use Testcenter\Domain\Submission\Service\ScoringService;
 use Testcenter\Domain\Submission\Submission;
 use Testcenter\Domain\Submission\SubmissionRepository;
@@ -57,9 +58,9 @@ class SubmitExamHandler
         $result = [];
         foreach ($userAnswers as $questionId => $userAnswer) {
             /** @var Question $question */
-            $question = $questions->findByID(new QuestionID($questionId));
+            $question = $questions->findById(new QuestionID($questionId));
             if (!$question) {
-                throw new InvalidArgumentException("Question with ID $questionId not found");
+                throw new SubmissionException("Question with ID $questionId not found");
             }
 
             $result[$questionId] = $question->createAnswer($userAnswer);

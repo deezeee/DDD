@@ -40,7 +40,7 @@ class QuestionCollection implements Countable, IteratorAggregate
         $this->questions[$id] = $question;
     }
 
-    public function findByID(QuestionID $id): ?Question
+    public function findById(QuestionID $id): ?Question
     {
         return $this->questions[$id->value()] ?? null;
     }
