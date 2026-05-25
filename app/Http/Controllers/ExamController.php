@@ -109,6 +109,22 @@ class ExamController
                         $totalScore += floor($partialScore);
                     }
                 }
+
+                if ($question->type === 'multiple_choice') {
+                    $correct = $question->payload['correct'] ?? [];
+
+                    if (sort($correct) === sort($answer)) {
+                        $totalScore += $question->score;
+                    }
+                }
+
+                if ($question->type === 'ordering') {
+                    $correct = $question->payload['correct_order'] ?? [];
+
+                    if ($correct === $answer) {
+                        $totalScore += $question->score;
+                    }
+                }
             }
 
             // =====================================
